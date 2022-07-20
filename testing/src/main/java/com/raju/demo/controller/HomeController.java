@@ -42,7 +42,11 @@ public class HomeController {
     }
 
     @GetMapping("/sixth")
-    public ResponseEntity<String> testSix(@RequestHeader(value = "Custom") String acceptHeader){
+    public ResponseEntity<String> testSix(@RequestHeader Map<String, String> headers){
+        String customHeader = headers.get("custom");
+        if(customHeader==null){
+            return  new ResponseEntity<>("You don't have authorization :( ",HttpStatus.FORBIDDEN);
+        }
         return  new ResponseEntity<>("Source retrieved successfully",HttpStatus.OK);
     }
 
